@@ -54,6 +54,22 @@ still be respected.
 *   SHOULD migrate the blocked numbers into the provider when a device updates
 to Android 7.0.
 
+#### 7.4.1.2\. Telecom API
+
+If device implementations report `android.hardware.telephony`, they:
+
+*   [C-SR] Are STRONGLY RECOMMENDED to handle the the audio headset's
+    `KEYCODE_MEDIA_PLAY_PAUSE` and `KEYCODE_HEADSETHOOK` events for the
+    [`android.telecom`](https://developer.android.com/reference/android/telecom/package-summary.html)
+    APIs as below:
+    *   Call [`Connection.onDisconnect()`](https://developer.android.com/reference/android/telecom/Connection.html#onDisconnect%28%29)
+        when a short press of the key event is detected during an ongoing call.
+    *   Call [`Connection.onAnswer()`](https://developer.android.com/reference/android/telecom/Connection.html#onAnswer%28%29)
+        when a short press of the key event is detected during an incoming call.
+    *   Call [`Connection.onReject()`](https://developer.android.com/reference/android/telecom/Connection.html#onReject%28%29)
+        when a long press of the key event is detected during an incoming call.
+    *   Toggle the mute status of the [`CallAudioState`](https://developer.android.com/reference/android/telecom/CallAudioState.html)
+
 ### 7.4.2\. IEEE 802.11 (Wi-Fi)
 
 Device implementations:
@@ -162,10 +178,6 @@ APIs MUST throw an `UnsupportedOperationException`.
 
 ### 7.4.3\. Bluetooth
 
-*    [W-0-1] Watch device implementations MUST support Bluetooth.
-*    [T-0-1] Television device implementations MUST support Bluetooth and
-Bluetooth LE.
-
 If device implementations support Bluetooth Audio profile, they:
 
 *    SHOULD support Advanced Audio Codecs and Bluetooth Audio Codecs
@@ -188,17 +200,6 @@ respectively) and implement the platform APIs.
 *    SHOULD implement relevant Bluetooth profiles such as
      A2DP, AVCP, OBEX, etc. as appropriate for the device.
 
-Automotive device implementations:
-*    [A-0-1] Automotive device implementations MUST support Bluetooth and
-SHOULD support Bluetooth LE.
-*    [A-0-2] Android Automotive implementations MUST support the following
-Bluetooth profiles:
-
-     * Phone calling over Hands-Free Profile (HFP).
-     * Media playback over Audio Distribution Profile (A2DP).
-     * Media playback control over Remote Control Profile (AVRCP).
-     * Contact sharing using the Phone Book Access Profile (PBAP).
-*    SHOULD support Message Access Profile (MAP).
 
 If device implementations include support for Bluetooth Low Energy, they:
 
@@ -412,10 +413,6 @@ the method [`getMasterSyncAutomatically()`](
 If device implementations include a metered connection, they are:
 
 *   [SR] STRONGLY RECOMMENDED to provide the data saver mode.
-
-If Handheld device implementations include a metered connection, they:
-
-*   [H-1-1] MUST provide the data saver mode.
 
 If device implementations provide the data saver mode, they:
 
